@@ -1,37 +1,41 @@
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
 
-    // More specific exception
-    public static Maze parseMaze(String fileName) throws Exception {
+    public static List<String> readFile(String fileName)
+            throws FileNotFoundException {
 
         File file = new File(fileName);
         BufferedReader reader = new BufferedReader(new FileReader(file));
 
         List<String> fileLines = new ArrayList<String>();
 
-        while (reader.ready())
-            fileLines.add(reader.readLine());
+        try {
 
-        return toMaze(fileLines);
+            while (reader.ready())
+                fileLines.add(reader.readLine());
+
+            reader.close();
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage()); // No clue when this will happen ¯\_(ツ)_/¯
+        }
+
+        return fileLines;
     }
 
     // More specific exception
-    private static Maze toMaze(List<String> input) throws Exception {
-        // verify string lengths
-        // verify string contents
+    public static Maze toMaze(List<String> input) throws MazeException {
 
-        /* Set<Character> validChars = new HashSet();
-
-        validChars.add('0');
-        validChars.add('1');
-        validChars.add('A');
-        validChars.add('B'); */
+        MazeException.verifyMazeSize(input);
+        MazeException.verifyMazeContents(input);
 
         int columnCount = input.get(0).length();
         int rowCount = input.size();
