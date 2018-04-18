@@ -9,6 +9,7 @@ public class MazeException extends Exception {
         UNEXPECTED_CHARACTER ("Maze contains an unexpected character"),
         INVALID_START ("Maze does not contain exactly one start point"),
         INVALID_END ("Maze does not contain exactly one end point"),
+        NO_PATH ("No path from start to end exists"),
         NO_MAZE ("No maze provided");
 
         private String errorMessage;
