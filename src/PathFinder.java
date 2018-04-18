@@ -16,7 +16,7 @@ public abstract class PathFinder {
     }
 
     // Will implement a more specific exception later
-    public void solveMaze() throws Exception {
+    public void solveMaze() throws MazeException {
 
         long startTime = System.currentTimeMillis();
         List<Maze.Room> solution = path();
@@ -29,8 +29,8 @@ public abstract class PathFinder {
         setSolved(true);
     }
 
-    // Will implement more specific exception later
-    public abstract List<Maze.Room> path() throws Exception;
+    // If no path exists, `throw new MazeException(MazeException.ErrorCode.NO_PATH);`
+    public abstract List<Maze.Room> path() throws MazeException;
 
     /**
      * @return the solution
