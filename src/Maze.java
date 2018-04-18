@@ -11,7 +11,7 @@ public class Maze {
         private final Point location;
         private final Set<Room> adjacentRooms;
 
-        private Room(Point location) {
+        public Room(Point location) {
             this.location = location;
             this.adjacentRooms = new HashSet<Room>();
         }
