@@ -18,17 +18,23 @@ public class BreadthFirstSearch extends PathFinder{
 	@Override
 	public List<Maze.Room> path() throws MazeException {
 		
+		boolean solved = false;
 		Set<Maze.Room> visited = new HashSet<Maze.Room>();
 		Maze.Room start = getMaze().getStart();
 		ArrayDeque<Maze.Room> q = new ArrayDeque<Maze.Room>();
 		q.add(start);
 		
 		// Loops through every element(Room) in q(Que) evaluating each node until every node is evaluated or end(B) is found
-		while(!q.isEmpty()) {			
+		while(!q.isEmpty() && !solved) {			
 			Maze.Room x = q.remove();	
 			
+			// Checks if B(the goal) was found
+			if(x == getMaze().getEnd()){
+				//setSolved(true); // setSolved() is private
+				solved = true;
+			}
 			// Node has NOT been visited
-			if(!visited.contains(x)) {
+			if(!visited.contains(x) && !solved) {
 				
 				visited.add(x);
 				Set<Maze.Room> adjacent = getMaze().adjacentRooms(x);
