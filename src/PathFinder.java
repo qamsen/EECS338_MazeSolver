@@ -91,5 +91,9 @@ public abstract class PathFinder {
         else
             return "Path not found";
     }
+    
+    public static void main(String args[]) {
+    	
+    }
 
 }
