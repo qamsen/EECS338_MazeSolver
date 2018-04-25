@@ -6,6 +6,7 @@ public abstract class PathFinder {
     private Optional<List<Maze.Room>> solution;
     private Optional<Double> timeToSolve;
     private boolean isSolved;
+    private int nodesExpanded;
     private final Maze maze;
 
     PathFinder(Maze maze) {
@@ -13,6 +14,7 @@ public abstract class PathFinder {
         this.setSolution(Optional.<List<Maze.Room>>empty());
         this.setTimeToSolve(Optional.<Double>empty());
         this.setSolved(false);
+        this.nodesExpanded = 0;
     }
 
     // Will implement a more specific exception later
@@ -30,7 +32,7 @@ public abstract class PathFinder {
     }
 
     // If no path exists, `throw new MazeException(MazeException.ErrorCode.NO_PATH);`
-    public abstract List<Maze.Room> path() throws MazeException;
+    abstract List<Maze.Room> path() throws MazeException;
 
     /**
      * @return the solution
@@ -42,7 +44,7 @@ public abstract class PathFinder {
     /**
      * @param solution the solution to set
      */
-    private void setSolution(Optional<List<Maze.Room>> solution) {
+    void setSolution(Optional<List<Maze.Room>> solution) {
         this.solution = solution;
     }
 
@@ -56,7 +58,7 @@ public abstract class PathFinder {
     /**
      * @param timeToSolve the timeToSolve to set
      */
-    private void setTimeToSolve(Optional<Double> timeToSolve) {
+    void setTimeToSolve(Optional<Double> timeToSolve) {
         this.timeToSolve = timeToSolve;
     }
 
@@ -70,7 +72,7 @@ public abstract class PathFinder {
     /**
      * @param isSolved the isSolved to set
      */
-    private void setSolved(boolean isSolved) {
+    void setSolved(boolean isSolved) {
         this.isSolved = isSolved;
     }
 
@@ -79,6 +81,18 @@ public abstract class PathFinder {
      */
     public Maze getMaze() {
         return maze;
+    }
+
+    public int getNodesExpanded() {
+        return nodesExpanded;
+    }
+
+    void setNodesExpanded(int nodesExpanded) {
+        this.nodesExpanded = nodesExpanded;
+    }
+
+    void incrementNodesExpanded() {
+        nodesExpanded++;
     }
 
     @Override

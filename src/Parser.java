@@ -47,7 +47,7 @@ public class Parser {
         Point endPoint = null;
 
         for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze.length; j++) {
+            for (int j = 0; j < maze[0].length; j++) {
 
                 // Checks whether the cell represents a wall or a room
                 if (rows[i][j] == '0')
@@ -85,7 +85,8 @@ public class Parser {
         int row = maze.getMazeSize().height;
         int column = maze.getMazeSize().width;
 
-        char[][] charMaze = initializeCharMaze(row, column);
+        char[][] charMaze = initializeCharMaze(column, row);
+
         addRooms(charMaze, maze);
         addSolutionPath(charMaze, solution);
 
