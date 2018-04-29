@@ -30,6 +30,11 @@ public class MazeException extends Exception {
         this.errorCode = errorCode;
     }
 
+    @Override
+    public String getMessage() {
+        return errorCode.toString();
+    }
+
     public static void verifyMazeContents(List<String> mazeRows) throws MazeException {
 
         String pattern = "[01AB]*";
