@@ -9,6 +9,25 @@ import java.util.List;
 
 public class Parser {
 
+    public static void main(String[] args) throws Exception {
+
+        List<String> mazeLines = readFile("test.txt");
+        Maze maze = toMaze(mazeLines);
+        PathFinder pathFinder = new Djikstra(maze);
+        pathFinder.solveMaze();
+
+        List<Maze.Room> solution = pathFinder.getSolution().get();
+        List<String> solvedMaze = deMaze(maze, solution);
+
+        System.out.println("Solution: \n");
+
+        for (String s : solvedMaze)
+            System.out.println(s);
+
+        System.out.println("\nTime to solve: " + pathFinder.getTimeToSolve().get());
+        System.out.println("Nodes expanded: " + pathFinder.getNodesExpanded());
+    }
+
     public static List<String> readFile(String fileName)
             throws FileNotFoundException {
 
@@ -131,7 +150,7 @@ public class Parser {
             int i = room.getLocation().x;
             int j = room.getLocation().y;
 
-            charMaze[i][j] = '1';
+            charMaze[i][j] = ' ';
         }
     }
 

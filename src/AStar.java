@@ -14,7 +14,7 @@ public class AStar extends PathFinder {
     }
 
     // Class which has a room, and the necessary values to perform A*
-    private class DepthRoom {
+    class HeuristicRoom {
 
         private final int depth;
 
@@ -24,9 +24,9 @@ public class AStar extends PathFinder {
         private final Maze.Room room;
 
         // Used to rebuild the maze
-        private final DepthRoom parent;
+        private final HeuristicRoom parent;
 
-        DepthRoom(int depth, Maze.Room room, DepthRoom parent) {
+        HeuristicRoom(int depth, Maze.Room room, HeuristicRoom parent) {
             this.depth = depth;
             this.room = room;
             this.parent = parent;
@@ -41,7 +41,7 @@ public class AStar extends PathFinder {
             return room;
         }
 
-        DepthRoom getParent() {
+        HeuristicRoom getParent() {
             return parent;
         }
 
@@ -54,7 +54,7 @@ public class AStar extends PathFinder {
     @Override
     List<Maze.Room> path() throws MazeException {
 
-        DepthRoom nextRoom = aStarSearch();
+        HeuristicRoom nextRoom = aStarSearch();
         List<Maze.Room> solution = new LinkedList<Maze.Room>();
 
         // builds solution
@@ -68,35 +68,35 @@ public class AStar extends PathFinder {
         return solution;
     }
 
-    private DepthRoom aStarSearch() throws MazeException {
+    private HeuristicRoom aStarSearch() throws MazeException {
 
         // Comparator for the priority queue
-        Comparator<DepthRoom> comparator = new Comparator<DepthRoom>() {
+        Comparator<HeuristicRoom> comparator = new Comparator<HeuristicRoom>() {
 
             @Override
-            public int compare(DepthRoom room1, DepthRoom room2) {
+            public int compare(HeuristicRoom room1, HeuristicRoom room2) {
                 return room1.getValue() - room2.getValue();
             }
 
         };
 
-        Set<DepthRoom> closedRooms = new HashSet<DepthRoom>();
+        Set<HeuristicRoom> closedRooms = new HashSet<HeuristicRoom>();
         Set<Maze.Room> visitedRooms = new HashSet<Maze.Room>();
 
-        PriorityQueue<DepthRoom> openRooms = new PriorityQueue<DepthRoom>(1, comparator);
+        PriorityQueue<HeuristicRoom> openRooms = new PriorityQueue<HeuristicRoom>(1, comparator);
 
-        openRooms.add(new DepthRoom(0, getMaze().getStart(), null));
+        openRooms.add(new HeuristicRoom(0, getMaze().getStart(), null));
 
         while(!openRooms.isEmpty()) {
 
-            DepthRoom prioDepthRoom = openRooms.poll();
-            Maze.Room prioRoom = prioDepthRoom.getRoom();
+            HeuristicRoom prioHeuristicRoom = openRooms.poll();
+            Maze.Room prioRoom = prioHeuristicRoom.getRoom();
 
             if (prioRoom.equals(getMaze().getEnd()))
-                return prioDepthRoom;
+                return prioHeuristicRoom;
 
             incrementNodesExpanded();
-            closedRooms.add(prioDepthRoom);
+            closedRooms.add(prioHeuristicRoom);
             visitedRooms.add(prioRoom);
 
             for (Maze.Room room : getMaze().adjacentRooms(prioRoom)) {
@@ -104,14 +104,14 @@ public class AStar extends PathFinder {
                 if (visitedRooms.contains(room))
                     continue;
 
-                int nextDepth = prioDepthRoom.getDepth() + 1;
-                DepthRoom nextDepthRoom = new DepthRoom(nextDepth, room, prioDepthRoom);
+                int nextDepth = prioHeuristicRoom.getDepth();
+                HeuristicRoom nextHeuristicRoom = new HeuristicRoom(nextDepth, room, prioHeuristicRoom);
 
-                boolean bestInOpen = isBestIn(openRooms, comparator, nextDepthRoom);
-                boolean bestInClosed = isBestIn(closedRooms, comparator, nextDepthRoom);
+                boolean bestInOpen = isBestIn(openRooms, comparator, nextHeuristicRoom);
+                boolean bestInClosed = isBestIn(closedRooms, comparator, nextHeuristicRoom);
 
                 if (bestInOpen && bestInClosed)
-                    openRooms.add(nextDepthRoom);
+                    openRooms.add(nextHeuristicRoom);
             }
 
         }
@@ -120,15 +120,15 @@ public class AStar extends PathFinder {
     }
 
     private boolean isBestIn(
-            Iterable<DepthRoom> iterable,
-            Comparator<DepthRoom> comparator,
-            DepthRoom room) {
+            Iterable<HeuristicRoom> iterable,
+            Comparator<HeuristicRoom> comparator,
+            HeuristicRoom room) {
 
-        Iterator<DepthRoom> iterator = iterable.iterator();
+        Iterator<HeuristicRoom> iterator = iterable.iterator();
 
         while (iterator.hasNext()) {
 
-            DepthRoom nextRoom = iterator.next();
+            HeuristicRoom nextRoom = iterator.next();
 
             Point location1 = room.getRoom().getLocation();
             Point location2 = nextRoom.getRoom().getLocation();

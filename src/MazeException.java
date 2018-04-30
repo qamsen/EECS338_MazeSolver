@@ -37,7 +37,7 @@ public class MazeException extends Exception {
 
     public static void verifyMazeContents(List<String> mazeRows) throws MazeException {
 
-        String pattern = "[01AB]*";
+        String pattern = "[0 AB]*";
         int startPoints = 0;
         int endPoints = 0;
 
