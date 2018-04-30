@@ -72,4 +72,9 @@ public class DepthFirstSearch extends PathFinder{
         throw new MazeException(MazeException.ErrorCode.NO_PATH);
     }
 
+    @Override
+    public String toString() {
+        return "Depth First Search:\n\n" + super.toString();
+    }
+
 }

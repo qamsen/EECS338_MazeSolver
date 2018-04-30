@@ -155,7 +155,7 @@ public class AStar extends PathFinder {
 
     @Override
     public String toString() {
-        return "# A* Search \n\n" + super.toString();
+        return "A* Search:\n\n" + super.toString();
     }
 
 }

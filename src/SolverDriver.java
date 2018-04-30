@@ -93,11 +93,15 @@ public class SolverDriver {
 
         SolveRunnable aStar = new SolveRunnable(new AStar(maze));
         SolveRunnable dfs = new SolveRunnable(new DepthFirstSearch(maze));
+        SolveRunnable bfs = new SolveRunnable(new BreadthFirstSearch(maze));
+        SolveRunnable dijk = new SolveRunnable(new Djikstra(maze));
 
         List<SolveRunnable> list = new ArrayList<SolveRunnable>();
 
         list.add(aStar);
         list.add(dfs);
+        list.add(bfs);
+        list.add(dijk);
 
         return list;
     }
