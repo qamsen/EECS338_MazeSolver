@@ -153,4 +153,9 @@ public class AStar extends PathFinder {
         return Math.abs(xDiff) + Math.abs(yDiff);
     }
 
+    @Override
+    public String toString() {
+        return "# A* Search \n\n" + super.toString();
+    }
+
 }

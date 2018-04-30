@@ -98,11 +98,21 @@ public abstract class PathFinder {
     @Override
     public String toString() {
 
-        if (isSolved())
-            // Will need to a text representation of the solution, time it took
-            // to solve, and the nodes evaluated
-            return "";
-        else
+        if (isSolved()) {
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.append("Time to solve: " + timeToSolve.get() + "\n");
+            builder.append("Nodes expanded: " + nodesExpanded + "\n");
+            builder.append("Maze Solution: \n\n");
+
+            for (String s : Parser.deMaze(getMaze(), solution.get())) {
+                builder.append(s + "\n");
+            }
+
+            return builder.toString();
+
+        } else
             return "Path not found";
     }
 
